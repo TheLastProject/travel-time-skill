@@ -10,6 +10,26 @@ class TravelTime(MycroftSkill):
     def __init__(self):
         MycroftSkill.__init__(self)
 
+    def _parse_location(self, location_string):
+        if location_string == "home":
+            if "home" in self.settings and self.settings["home"]:
+                location_name = self.settings["home"]
+                location = self._geocode(location_name)
+            else:
+                location_name = self.location_pretty
+                current_location = self.location["coordinate"]
+                location = "{},{}".format(self.location["coordinate"]["latitude"], self.location["coordinate"]["longitude"])
+
+            return location_name, location
+
+        location_name = location_string
+        if location_string in self.settings and self.settings[location_string]:
+            location_name = self.settings[location_string]
+
+        location = self._geocode(location_name)
+
+        return location_name, location
+
     def _geocode(self, location):
         # WazeRouteCalculator is not good at geocoding
         # So we ask OpenStreetMap Nomatim
@@ -22,7 +42,6 @@ class TravelTime(MycroftSkill):
             except (IndexError, KeyError):
                 return None
 
-
     @intent_file_handler('time.travel.intent')
     def handle_time_travel(self, message):
         destination_string = message.data.get('destination')
@@ -33,28 +52,25 @@ class TravelTime(MycroftSkill):
         if specifier:
             destination_string = "{}, {}".format(destination_string, specifier)
 
-        # WazeRouteCalculator is not good at reverse geocoding
-        # So we ask OpenStreetMap Nomatim first
-        destination = self._geocode(destination_string)
-        if not destination:
-            self.speak_dialog('time.travel.failed_finding_location', {'location': destination_string})
+        destination = self._parse_location(destination_string)
+        if not destination[1]:
+            self.speak_dialog('time.travel.failed_finding_location', {'location': destination[0]})
             return None
 
         from_string = message.data.get('from')
         if from_string:
-            from_ = self._geocode(from_string)
-            if not from_:
-                self.speak_dialog('time.travel.failed_finding_location', {'location': destination_string})
-                return None
+            from_ = self._parse_location(from_string)
         else:
-            from_string = self.location_pretty
-            current_location = self.location["coordinate"]
-            from_ = "{},{}".format(current_location["latitude"], current_location["longitude"])
+            from_ = self._parse_location("home")
 
-        route = WazeRouteCalculator.WazeRouteCalculator(from_, destination)
+        if not from_[1]:
+            self.speak_dialog('time.travel.failed_finding_location', {'location': from_[0]})
+            return None
+
+        route = WazeRouteCalculator.WazeRouteCalculator(from_[1], destination[1])
         route_info = route.calc_route_info()
 
-        self.speak_dialog('time.travel', {'time': "{:.0f}".format(route_info[0]), 'distance': "{:.0f}".format(route_info[1]), 'from': from_string, 'destination': destination_string})
+        self.speak_dialog('time.travel', {'time': "{:.0f}".format(route_info[0]), 'distance': "{:.0f}".format(route_info[1]), 'from': from_[0], 'destination': destination[0]})
 
 
 def create_skill():

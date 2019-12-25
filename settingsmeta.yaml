@@ -1,0 +1,12 @@
+skillMetadata:
+   sections:
+      - name: Location Aliases
+        fields:
+          - name: home
+            type: text
+            label: Home (defaults to Mycroft's location)
+            value: ""
+          - name: work
+            type: text
+            label: Work
+            value: ""
