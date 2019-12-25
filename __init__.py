@@ -29,6 +29,10 @@ class TravelTime(MycroftSkill):
         if not destination_string:
             return None
 
+        specifier = message.data.get('specifier')
+        if specifier:
+            destination_string = "{}, {}".format(destination_string, specifier)
+
         # WazeRouteCalculator is not good at reverse geocoding
         # So we ask OpenStreetMap Nomatim first
         destination = self._geocode(destination_string)
