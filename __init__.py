@@ -21,8 +21,12 @@ class TravelTime(MycroftSkill):
         url = "https://nominatim.openstreetmap.org/search?{}".format(urlencode({'q': destination_string, 'format': 'json', 'limit': 1}))
         with urlopen(url) as data:
             json_data = data.read().decode('utf-8')
-            parsed_data = json.loads(json_data)[0]
-            destination = "{},{}".format(parsed_data["lat"], parsed_data["lon"])
+            parsed_data = json.loads(json_data)
+            try:
+                destination = "{},{}".format(parsed_data[0]["lat"], parsed_data[0]["lon"])
+            except (IndexError, KeyError):
+                self.speak_dialog('time.travel.failed_finding_location', {'location': destination_string})
+                return None
 
         from_string = message.data.get('from')
         if not from_string:
