@@ -7,6 +7,7 @@ Get traffic information for any route, defaulting to your Mycroft's location.
 This skill uses [OpenStreetMap Nomatim](https://wiki.openstreetmap.org/wiki/Nominatim) to reverse geocode the location and [WazeRouteCalculator](https://github.com/kovacsbalu/WazeRouteCalculator) to calculate the route.
 
 ## Examples
+* "How long to work?"
 * "What's the travel time to amsterdam?"
 * "What's traffic like to brussels?"
 * "What's the traffic like from amsterdam to brussels?"
