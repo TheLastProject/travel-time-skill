@@ -1,0 +1,3 @@
+dependencies:
+  python:
+    - WazeRouteCalculator==0.12
