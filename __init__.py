@@ -70,10 +70,19 @@ class TravelTime(MycroftSkill):
         route = WazeRouteCalculator.WazeRouteCalculator(from_[1], destination[1])
         route_info = route.calc_route_info()
 
+        # Store if we need metric or imperial version of dialog
+        dialog = "time.travel.metric"
+
         # Mycroft expects the time in seconds
         time = util.format.nice_duration(route_info[0] * 60, resolution=util.format.TimeResolution.MINUTES)
 
-        self.speak_dialog('time.travel', {'time': time, 'distance': "{:.0f}".format(route_info[1]), 'from': from_[0], 'destination': destination[0]})
+        # Convert to Imperial system if necessary
+        distance = route_info[1]
+        if self.config_core["system_unit"] == "imperial":
+            dialog = "time.travel.imperial"
+            distance = distance * 0.62137119
+
+        self.speak_dialog(dialog, {'time': time, 'distance': util.format.pronounce_number(distance, places=0), 'from': from_[0], 'destination': destination[0]})
 
 
 def create_skill():
