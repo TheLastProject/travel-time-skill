@@ -1,4 +1,4 @@
-from mycroft import MycroftSkill, intent_file_handler
+from mycroft import MycroftSkill, intent_file_handler, util
 
 from urllib.parse import urlencode
 from urllib.request import urlopen, Request
@@ -70,7 +70,10 @@ class TravelTime(MycroftSkill):
         route = WazeRouteCalculator.WazeRouteCalculator(from_[1], destination[1])
         route_info = route.calc_route_info()
 
-        self.speak_dialog('time.travel', {'time': "{:.0f}".format(route_info[0]), 'distance': "{:.0f}".format(route_info[1]), 'from': from_[0], 'destination': destination[0]})
+        # Mycroft expects the time in seconds
+        time = util.format.nice_duration(route_info[0] * 60, resolution=util.format.TimeResolution.MINUTES)
+
+        self.speak_dialog('time.travel', {'time': time, 'distance': "{:.0f}".format(route_info[1]), 'from': from_[0], 'destination': destination[0]})
 
 
 def create_skill():
