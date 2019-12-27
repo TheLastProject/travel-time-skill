@@ -38,7 +38,7 @@ class TravelTime(MycroftSkill):
         else:
             lookup = location_string
 
-        if lookup is self.settings and self.settings[lookup]:
+        if lookup in self.settings and self.settings[lookup]:
             return self.settings[lookup]
 
         return location_string
