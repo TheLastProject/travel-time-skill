@@ -22,6 +22,12 @@ class TravelTime(MycroftSkill):
 
             return location_name, location
 
+        # Treat work as a special location needing to be defined
+        # Most likely nobody meant https://nominatim.openstreetmap.org/details.php?place_id=259598430
+        if location_string == "work":
+            if not "work" in self.settings or not self.settings[location_string]:
+                return "work", None
+
         location_name = location_string
         if location_string in self.settings and self.settings[location_string]:
             location_name = self.settings[location_string]
