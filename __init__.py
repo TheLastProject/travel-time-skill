@@ -120,7 +120,6 @@ class TravelTime(MycroftSkill):
 
         # Speak result
         self._speak_result(
-            self,
             from_=from_[0],
             to=destination[0],
             minutes=route_info[0],
