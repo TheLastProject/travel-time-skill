@@ -10,16 +10,18 @@ import WazeRouteCalculator
 class TravelTime(MycroftSkill):
     def __init__(self):
         MycroftSkill.__init__(self)
+        self.home_words = self.translate_list("home")
+        self.work_words = self.translate_list("work")
 
     def _parse_location(self, location_string):
         location_name = self._resolve_alias(location_string)
-        if location_name == "home":
+        if location_name in self.home_words:
             # If "home" is requested and not set, grab Mycroft's location
             location = "{},{}".format(
                 self.location["coordinate"]["latitude"],
                 self.location["coordinate"]["longitude"]
             )
-        elif location_name == "work":
+        elif location_name in self.work_words:
             # If "work" is requested and not set, give up
             location = None
         else:
@@ -29,8 +31,15 @@ class TravelTime(MycroftSkill):
         return location_name, location
 
     def _resolve_alias(self, location_string):
-        if location_string is self.settings and self.settings[location_string]:
-            return self.settings[location_string]
+        if location_string in self.home_words:
+            lookup = "home"
+        elif location_string in self.work_words:
+            lookup = "work"
+        else:
+            lookup = location_string
+
+        if lookup is self.settings and self.settings[lookup]:
+            return self.settings[lookup]
 
         return location_string
 
@@ -103,7 +112,7 @@ class TravelTime(MycroftSkill):
         # Default to home
         from_string = message.data.get('from')
         if from_string is None:
-            from_string = "home"
+            from_string = self.home_words[0]
 
         # If can't find from, give up
         from_ = self._parse_location(from_string)
