@@ -98,11 +98,6 @@ class TravelTime(MycroftSkill):
         if not destination_string:
             return None
 
-        # "How long to building in city" -> "building, city"
-        specifier = message.data.get('specifier')
-        if specifier:
-            destination_string = "{}, {}".format(destination_string, specifier)
-
         # If can't find destination, give up
         destination = self._parse_location(destination_string)
         if destination[1] is None:

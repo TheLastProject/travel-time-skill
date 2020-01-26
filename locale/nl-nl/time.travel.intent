@@ -1,12 +1,6 @@
 Hoe lang is het reizen naar {destination}
-Hoe lang is het reizen naar {destination} in {specifier}
 Hoe lang is het reizen van {from} naar {destination}
-Hoe lang is het reizen van {from} naar {destination} in {specifier}
 Hoe is het verkeer naar {destination}
-Hoe is het verkeer naar {destination} in {specifier}
 Hoe is het verkeer van {from} naar {destination}
-Hoe is het verkeer van {from} naar {destination} in {specifier}
 Hoe ver is het (reizen |)naar {destination}
-Hoe ver is het (reizen |)naar {destination} in {specifier}
 Hoe ver is het (reizen |)van {from} naar {destination}
-Hoe ver is het (reizen |)van {from} naar {destination} in {specifier}

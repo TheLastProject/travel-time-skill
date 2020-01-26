@@ -1,10 +1,5 @@
 what is (the |)travel time to {destination}
-what is (the |)travel time to {destination} in {specifier}
 what is (the |)traffic like to {destination}
-what is (the |)traffic like to {destination} in {specifier}
 what is (the |)traffic like from {from} to {destination}
-what is (the |)traffic like from {from} to {destination} in {specifier}
 how long to (reach| ){destination}
-how long to (reach| ){destination} in {specifier}
 how long to (reach| ){destination} from {from}
-how long to (reach| ){destination} in {specifier} from {from}
