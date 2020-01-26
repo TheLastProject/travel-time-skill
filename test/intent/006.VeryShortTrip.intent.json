@@ -1,0 +1,7 @@
+{
+  "utterance": "How long from De Ooyen 10 in Geldermalsen to De Ooyen 11 in Geldermalsen",
+  "intent_type": "time.travel.intent",
+  "expected_dialog": "time.travel.metric",
+  "expected_response": "It is 0 kilometers and under a minute from de ooyen 10 in geldermalsen to de ooyen 11 in geldermalsen by car",
+  "settings": {"home": "Amsterdam"}
+}

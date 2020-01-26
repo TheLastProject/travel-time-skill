@@ -1,0 +1,7 @@
+{
+  "utterance": "Travel time from austin to Dallas",
+  "intent_type": "time.travel.intent",
+  "expected_dialog": "time.travel.metric",
+  "expected_response": "It is .* kilometers and .* minutes from austin to dallas by car",
+  "settings": {"home": "Amsterdam"}
+}

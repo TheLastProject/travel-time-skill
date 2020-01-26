@@ -1,0 +1,7 @@
+{
+  "utterance": "How long to work",
+  "intent_type": "time.travel.intent",
+  "expected_dialog": "time.travel.failed_finding_location",
+  "expected_response": "I could not find where work is",
+  "settings": {"home": "Amsterdam", "work": ""}
+}
