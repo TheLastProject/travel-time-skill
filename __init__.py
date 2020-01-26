@@ -3,6 +3,7 @@ from mycroft import MycroftSkill, intent_file_handler, util
 from urllib.parse import urlencode
 from urllib.request import urlopen
 import json
+import traceback
 
 import WazeRouteCalculator
 
@@ -65,6 +66,15 @@ class TravelTime(MycroftSkill):
             {'location': location}
         )
 
+    def _speak_failed_calculating_route(self, from_, destination):
+        self.speak_dialog(
+            'time.travel.failed_calculating_route',
+            {
+                'from': from_,
+                'destination': destination
+            }
+        )
+
     def _speak_result(self, from_, destination, minutes, kilometers, unit):
         # Mycroft expects the time in seconds
         time = util.format.nice_duration(
@@ -120,7 +130,12 @@ class TravelTime(MycroftSkill):
             from_[1],
             destination[1]
         )
-        route_info = route.calc_route_info()
+        try:
+            route_info = route.calc_route_info()
+        except WazeRouteCalculator.WRCError as e:
+            self._speak_failed_calculating_route(from_[0], destination[0])
+            traceback.print_exc()
+            return None
 
         # Speak result
         self._speak_result(

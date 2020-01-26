@@ -1,0 +1,8 @@
+{
+  "utterance": "How long from Amsterdam to New York",
+  "intent_type": "time.travel.intent",
+  "expected_dialog": "time.travel.failed_calculating_route",
+  "expected_response": "I couldn't calculate a route from amsterdam to new york",
+  "settings": {"home": "Amsterdam"}
+}
+
